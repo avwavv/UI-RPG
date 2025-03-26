@@ -6,6 +6,8 @@ public class Character : MonoBehaviour
 {
     public int health;
     [SerializeField] private Weapon weapon;
+    public int armour;
+    public int level;
 
     public Weapon Weapon
     {
@@ -17,17 +19,19 @@ public class Character : MonoBehaviour
         return weapon.GetDamage();
     }
 
+    public void LevelUp(int healthRegen, int damageIncrease)
+    {
+        Weapon.IncreaseDamage(damageIncrease);
+        health += healthRegen;
+    }
+
     public void GetHit(int damage)
     {
-        Debug.Log(name+ " starting health: " + health);
-        health -= damage;
-        Debug.Log(name+ " health after attack: " + health);
+        health -= damage - armour;
     }
 
     public void GetHit(Weapon weapon)
     {
-        Debug.Log(name+ " starting health: " + health);
-        health -= weapon.GetDamage();
-        Debug.Log(name + " health after get hit by " + weapon.name + ": " + health);
+        health -= weapon.GetDamage() - armour;
     }
 }
